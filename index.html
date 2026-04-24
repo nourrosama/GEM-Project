@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#1c1710"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="description" content="Grand Egyptian Museum — Staff Guide"/>
+  <title>GEM Staff Guide</title>
+  <link rel="stylesheet" href="styles/main.css"/>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: ROLE PICKER
+     ══════════════════════════════════════════════════════ -->
+<div class="page active" id="page-role-picker">
+  <div class="role-screen">
+
+    <div class="role-hero">
+      <!-- GEM Triangle Logo (SVG) -->
+      <div class="gem-logo">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="32,4 60,56 4,56" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+          <polygon points="32,16 50,48 14,48" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+          <circle cx="32" cy="32" r="3" fill="#c9a84c"/>
+          <line x1="32" y1="4" x2="32" y2="29" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <div class="role-eyebrow">Grand Egyptian Museum</div>
+      <h1 class="role-title">Staff <em>Guide</em></h1>
+      <p class="role-subtitle">Your personalized reference for the museum — exhibits, artifacts, and navigation.</p>
+    </div>
+
+    <div class="gold-line"><span>✦</span></div>
+
+    <p class="role-prompt">Select your role to continue</p>
+    <div class="role-grid" id="role-grid">
+      <!-- Rendered by role-picker.js -->
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: HOME
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-home">
+
+  <div class="home-hero hiero-border">
+    <div class="home-role-badge">
+      <span class="home-role-dot"></span>
+      <span class="home-role-text" id="home-role-text">Role</span>
+    </div>
+    <h1 class="home-greeting" id="home-greeting">Welcome</h1>
+    <p class="home-tagline" id="home-tagline"></p>
+  </div>
+
+  <div class="home-nav">
+    <div class="nav-card" onclick="showPage('page-exhibits');setNav('exhibits')">
+      <div class="nav-icon">🏛️</div>
+      <div class="nav-label">Exhibits</div>
+      <div class="nav-desc">All galleries &amp; collections</div>
+    </div>
+    <div class="nav-card" onclick="showPage('page-artifacts');setNav('artifacts')">
+      <div class="nav-icon">🏺</div>
+      <div class="nav-label">Artifacts</div>
+      <div class="nav-desc">Individual pieces</div>
+    </div>
+    <div class="nav-card wide" onclick="showPage('page-map');setNav('map');renderMap()">
+      <div class="nav-icon">🗺️</div>
+      <div style="flex:1">
+        <div class="nav-label">Floor Map</div>
+        <div class="nav-desc">Navigate the museum</div>
+      </div>
+      <span class="nav-arrow">›</span>
+    </div>
+  </div>
+
+  <div class="ornament-divider"><span>◆</span></div>
+
+  <div style="padding: 0 20px 8px">
+    <div class="section-label">Today's Highlights</div>
+  </div>
+  <div class="highlights-wrap">
+    <div id="home-highlights"></div>
+  </div>
+
+  <!-- Change role button -->
+  <div style="padding:0 20px 12px; text-align:center">
+    <button onclick="resetRole()" style="
+      background:none;border:1px solid var(--border-dim);border-radius:20px;
+      color:var(--text-muted);font-family:var(--font-ui);font-size:10px;
+      font-weight:600;letter-spacing:2px;text-transform:uppercase;
+      padding:8px 20px;cursor:pointer;transition:border-color 0.2s,color 0.2s;
+    "
+    onmouseover="this.style.borderColor='var(--border-mid)';this.style.color='var(--gold)'"
+    onmouseout="this.style.borderColor='var(--border-dim)';this.style.color='var(--text-muted)'"
+    >⇄ Change Role</button>
+  </div>
+
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: EXHIBITS LIST
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-exhibits">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('page-home');setNav('home')">‹</button>
+    <span class="topbar-title">Exhibits</span>
+  </div>
+  <div class="section-head">
+    <div class="section-label">All Galleries</div>
+    <div class="section-title">Collections</div>
+    <div class="section-sub">Tap any exhibit to explore</div>
+  </div>
+  <div class="exhibit-grid" id="exhibit-list"></div>
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: EXHIBIT DETAIL
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-exhibit-detail">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('page-exhibits');setNav('exhibits')">‹</button>
+    <span class="topbar-title" id="detail-topbar-title">Exhibit</span>
+  </div>
+  <div id="exhibit-detail-content"></div>
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: ARTIFACTS LIST
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-artifacts">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('page-home');setNav('home')">‹</button>
+    <span class="topbar-title">Artifacts</span>
+  </div>
+  <div class="section-head">
+    <div class="section-label">The Collection</div>
+    <div class="section-title">Artifacts</div>
+    <div class="section-sub">Individual pieces from the museum</div>
+  </div>
+  <div class="artifact-grid" id="artifact-list"></div>
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: ARTIFACT DETAIL
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-artifact-detail">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('page-artifacts');setNav('artifacts')">‹</button>
+    <span class="topbar-title" id="artifact-topbar-title">Artifact</span>
+  </div>
+  <div id="artifact-detail-content"></div>
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE: MAP
+     ══════════════════════════════════════════════════════ -->
+<div class="page" id="page-map">
+  <div class="topbar">
+    <button class="back-btn" onclick="showPage('page-home');setNav('home')">‹</button>
+    <span class="topbar-title">Floor Map</span>
+  </div>
+  <div class="section-head">
+    <div class="section-label">Museum Layout</div>
+    <div class="section-title">Navigation</div>
+    <div class="section-sub">Tap any room to see details</div>
+  </div>
+  <div id="map-content" class="map-wrap"></div>
+  <div class="nav-spacer"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     BOTTOM NAVIGATION
+     ══════════════════════════════════════════════════════ -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none">
+  <button class="bnav-btn active" id="bnav-home" onclick="showPage('page-home');setNav('home')">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-label">Home</span>
+  </button>
+  <button class="bnav-btn" id="bnav-exhibits" onclick="showPage('page-exhibits');setNav('exhibits')">
+    <span class="bnav-icon">🏛️</span>
+    <span class="bnav-label">Exhibits</span>
+  </button>
+  <button class="bnav-btn" id="bnav-artifacts" onclick="showPage('page-artifacts');setNav('artifacts')">
+    <span class="bnav-icon">🏺</span>
+    <span class="bnav-label">Artifacts</span>
+  </button>
+  <button class="bnav-btn" id="bnav-map" onclick="showPage('page-map');setNav('map');renderMap()">
+    <span class="bnav-icon">🗺️</span>
+    <span class="bnav-label">Map</span>
+  </button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCRIPTS — load order matters
+     ══════════════════════════════════════════════════════ -->
+
+<!-- 1. Role definitions -->
+<script src="data/roles.js"></script>
+
+<!-- 2. Role data — add a new <script> tag for each new role -->
+<script>const ROLE_DATA = {};</script>
+<script src="data/exhibits/guide.js"></script>
+<script src="data/exhibits/security.js"></script>
+<script src="data/exhibits/curator.js"></script>
+<!-- <script src="data/exhibits/maintenance.js"></script> -->
+
+<!-- 3. Map data & logic -->
+<script src="views/map.js"></script>
+
+<!-- 4. Home, exhibits, artifacts logic -->
+<script src="views/home.js"></script>
+
+<!-- 5. Role picker logic -->
+<script src="views/role-picker.js"></script>
+
+<!-- 6. Core navigation -->
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+
+    // Hide bottom nav on role picker
+    const nav = document.getElementById('bottom-nav');
+    nav.style.display = id === 'page-role-picker' ? 'none' : 'flex';
+
+    // Sync bottom nav highlight
+    if (id === 'page-home')                                    setNav('home');
+    else if (id === 'page-exhibits' || id === 'page-exhibit-detail') setNav('exhibits');
+    else if (id === 'page-artifacts' || id === 'page-artifact-detail') setNav('artifacts');
+    else if (id === 'page-map')                                setNav('map');
+  }
+
+  function setNav(key) {
+    document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById('bnav-' + key);
+    if (el) el.classList.add('active');
+  }
+
+  // Boot
+  initRolePicker();
+</script>
+
+</body>
+</html>
