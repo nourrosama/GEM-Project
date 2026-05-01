@@ -13,43 +13,37 @@
  *   id        — unique string key (no spaces)
  *   name      — display name shown on the card
  *   icon      — emoji icon for the card
- *   desc      — short description (1–2 lines)
  *   color     — accent color class: "ancient" | "science" | "art" | "nature" | "neutral"
  *   dataFile  — filename in /data/exhibits/ (without .js)
  */
 
 const ROLES = [
   {
-    id:       "guide",
-    name:     "Tour Guide",
-    icon:     "🎙️",
-    desc:     "Exhibit info & visitor talking points",
+    id:       "lawyer",
+    name:     "Lawyer | محامى",
+    icon:     "⚖️",
     color:    "ancient",
-    dataFile: "guide",
+    dataFile: "lawyer",
   },
   {
-    id:       "security",
-    name:     "Security",
-    icon:     "🛡️",
-    desc:     "Patrol zones, alerts & protocols",
-    color:    "neutral",
-    dataFile: "security",
-  },
-  {
-    id:       "curator",
-    name:     "Curator",
-    icon:     "🏺",
-    desc:     "Artifact records & condition notes",
+    id:       "artist",
+    name:     "Artist | فنان",
+    icon:     "🎨",
     color:    "art",
-    dataFile: "curator",
+    dataFile: "artist",
   },
-  // ── ADD MORE ROLES BELOW ──────────────────────
-  // {
-  //   id:       "maintenance",
-  //   name:     "Maintenance",
-  //   icon:     "🔧",
-  //   desc:     "Facility zones & task checklist",
-  //   color:    "science",
-  //   dataFile: "maintenance",
-  // },
+  {
+    id:       "programmer",
+    name:     "Programmer | مهندس كمبيوتر",
+    icon:     "💻",
+    color:    "science",
+    dataFile: "programmer",
+  },
+  {
+    id:       "architect",
+    name:     "Architect | مهندس معمارى",
+    icon:     "🏗️",
+    color:    "neutral",
+    dataFile: "architect",
+  },
 ];

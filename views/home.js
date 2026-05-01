@@ -7,24 +7,27 @@
 /* ── Render home screen for the selected role ── */
 function renderHome(role, data) {
   // Greeting
-  document.getElementById('home-greeting').innerHTML = data.homeGreeting;
-  document.getElementById('home-tagline').textContent = data.homeTagline;
+  const greetingEl = document.getElementById('home-greeting');
+  greetingEl.innerHTML = data.homeGreeting;
+
+  // Apply Arabic font & RTL direction for Arabic-content roles
+  if (data.isArabic) {
+    greetingEl.style.fontFamily = "'Cairo', 'Segoe UI', Arial, sans-serif";
+    greetingEl.style.direction  = 'rtl';
+  } else {
+    greetingEl.style.fontFamily = '';
+    greetingEl.style.direction  = '';
+  }
+
   document.getElementById('home-role-text').textContent = role.name;
 
-  // Highlights
-  const hWrap = document.getElementById('home-highlights');
-  hWrap.innerHTML = (data.highlights || []).map(h => `
-    <div class="highlight-item" onclick="openExhibit('${h.id}')">
-      <span class="highlight-icon">${h.icon}</span>
-      <div style="flex:1">
-        <div class="highlight-name">${h.name}</div>
-        <div class="highlight-brief">${h.brief}</div>
-      </div>
-      <span class="highlight-arrow">›</span>
-    </div>
-  `).join('');
+  // Professional insight section
+  const piEl = document.getElementById('home-professional-insight');
+  if (piEl) {
+    piEl.innerHTML = data.professionalInsight || '';
+  }
 
-  // Render exhibits and artifacts lists (used when those pages open)
+  // Render exhibits and artifacts lists (for detail pages, if data exists)
   renderExhibits(data);
   renderArtifacts(data);
 }

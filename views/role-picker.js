@@ -21,7 +21,6 @@ function renderRolePicker() {
     <div class="role-card" onclick="selectRole('${role.id}')">
       <span class="role-icon">${role.icon}</span>
       <div class="role-name">${role.name}</div>
-      <div class="role-desc">${role.desc}</div>
     </div>
   `).join('');
 }
